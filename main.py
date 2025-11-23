@@ -2,7 +2,7 @@
 Simple Calculator App
 A production-quality Kivy calculator with expression parsing and safe evaluation
 """
-#trigger the build
+#trigger build
 import re
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
