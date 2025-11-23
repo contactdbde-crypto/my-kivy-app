@@ -2,8 +2,7 @@ name: Build APK
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -24,7 +23,7 @@ jobs:
           pip install buildozer
           pip install Cython==0.29.36
 
-      - name: Fix Android SDK (Force working version)
+      - name: Install Android SDK + Build Tools (with AIDL)
         run: |
           sudo apt update
           sudo apt install -y openjdk-17-jdk unzip
@@ -34,7 +33,11 @@ jobs:
 
           wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmd.zip
           unzip cmd.zip -d cmd
-          yes | cmd/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/.buildozer/android/platform "platform-tools" "build-tools;34.0.0" "platforms;android-34"
+
+          yes | cmd/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/.buildozer/android/platform \
+            "platform-tools" \
+            "platforms;android-33" \
+            "build-tools;33.0.2"
 
       - name: Build APK
         run: buildozer android debug
